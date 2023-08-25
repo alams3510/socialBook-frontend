@@ -2,10 +2,11 @@ import "./post.css";
 import { FiMoreVertical } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../services/instance";
-import { format } from "timeago.js";
+// import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import moment from "moment/moment";
 
 const Post = ({ posts }) => {
   // console.log(posts, "posts");
@@ -70,7 +71,12 @@ const Post = ({ posts }) => {
                 />
               </Link>
               <span className="postName">{user.username}</span>
-              <span className="postDate">{format(posts.createdAt)}</span>
+              {/* <span className="postDate">{format(posts.createdAt)}</span> */}
+              <span className="postDate">
+                {moment(posts.createdAt, "YYYYMMDD").fromNow() === "a day ago"
+                  ? moment(new Date(posts.createdAt), "hour").fromNow()
+                  : moment(posts.createdAt, "YYYYMMDD").fromNow()}
+              </span>
             </div>
 
             <div className="postTopRight">
